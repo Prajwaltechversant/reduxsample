@@ -8,9 +8,9 @@ export const getData = createAsyncThunk(
     'data/getData',
     async () => {
         try {
-            const response = await axios.get('https://jsonplaceholder.typicode.com/photos')
+            const response = await axios.get('https://fakestoreapi.com/products')
             // console.log(response.data)
-            return response
+            return response.data
         } catch (err) {
             console.log(err)
         }

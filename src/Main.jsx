@@ -8,6 +8,9 @@ import Home from './screens/Home/Home'
 import Data from './screens/Data/Data'
 import { LoginContextAPI } from './context/ContextShare'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Loading from './screens/Loading'
+import Logout from './screens/Logout/Logout'
+import Sample from './screens/Sample'
 
 const LoginStack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator();
@@ -27,6 +30,8 @@ const Stack2 = () => {
         <Tab.Navigator>
             <Tab.Screen name='Home' component={Home} />
             <Tab.Screen name='Data' component={Data} />
+            <Tab.Screen name='Sample' component={Sample} />
+            <Tab.Screen name='Profile' component={Logout} />
         </Tab.Navigator>
     )
 }
@@ -37,6 +42,7 @@ const Main = () => {
 
     const [token, setToken] = useState()
     const { tokenStatus, setTokenStatus } = useContext(LoginContextAPI)
+    const [loading, setLoading] = useState(false)
 
     const checkIsLoggedIn = async () => {
         const isLoggedIn = await AsyncStorage.getItem('user');
@@ -46,12 +52,19 @@ const Main = () => {
         } else {
             setToken(null)
         }
+        setLoading(true)
+
     };
 
     useEffect(() => {
         checkIsLoggedIn();
 
     }, [tokenStatus, token]);
+    if(!loading){
+        return(
+            <Loading/>
+        )
+    }
     return (
         <NavigationContainer>
             {

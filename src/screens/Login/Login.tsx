@@ -1,18 +1,18 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useContext, useState } from 'react'
-import { Text,View,TextInput,TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { LoginContextAPI } from '../../context/ContextShare';
 
 export default function Login() {
 
-    const {tokenStatus,setTokenStatus} = useContext(LoginContextAPI)
+    const { tokenStatus, setTokenStatus } = useContext(LoginContextAPI)
     const [userData, setUserdata] = useState<{ username: String; password: any }>({
         username: "",
         password: ""
     })
 
-    const handleLogin =async () => {
+    const handleLogin = async () => {
 
         const { username, password } = userData
         console.log(userData, "hello world")
@@ -22,12 +22,12 @@ export default function Login() {
         else {
             const regeX = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')
             const isPasswordvalid = regeX.test(password)
-            if(isPasswordvalid){
+            if (isPasswordvalid) {
                 // console.log(isPasswordvalid)
-                const token =await AsyncStorage.setItem("user","true");
+                const token = await AsyncStorage.setItem("user", "true");
                 setTokenStatus("true")
             }
-            else{
+            else {
                 Alert.alert("Password must contain atleast one Uppercase letter,smaller case letter , Number and One special charactor")
             }
 
@@ -36,35 +36,40 @@ export default function Login() {
     }
     return (
         <View style={styles.container}>
-        <View >
-            <View >
-                <Text style={styles.label}>
-                    User name
-                </Text>
-                <TextInput placeholder='Enter Your Username' style={styles.inputBox}
-                    onChangeText={(e) => setUserdata({ ...userData, username: e })}
-                />
-            </View>
-            <View >
-                <Text style={styles.label}>
-                    Password
-                </Text>
-                <TextInput
-                    placeholder='Enter Your password'
-                    style={styles.inputBox}
-                    secureTextEntry
-                    onChangeText={(e) => setUserdata({ ...userData, password: e })} />
-            </View>
-            <View>
-                <TouchableOpacity style={styles.button} onPress={handleLogin} >
-                    <Text style={styles.label}>
-                        Login
-                    </Text>
-                </TouchableOpacity>
-            </View>
+            <KeyboardAvoidingView  
+            behavior="padding"
+            keyboardVerticalOffset={100}
+            >
+                <View >
+                    <View >
+                        <Text style={styles.label}>
+                            User name
+                        </Text>
+                        <TextInput placeholder='Enter Your Username' style={styles.inputBox}
+                            onChangeText={(e) => setUserdata({ ...userData, username: e })}
+                        />
+                    </View>
+                    <View >
+                        <Text style={styles.label}>
+                            Password
+                        </Text>
+                        <TextInput
+                            placeholder='Enter Your password'
+                            style={styles.inputBox}
+                            secureTextEntry
+                            onChangeText={(e) => setUserdata({ ...userData, password: e })} />
+                    </View>
+                    <View>
+                        <TouchableOpacity style={styles.button} onPress={handleLogin} >
+                            <Text style={styles.label}>
+                                Login
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </KeyboardAvoidingView>
         </View>
-
-    </View>)
+    )
 }
 
 

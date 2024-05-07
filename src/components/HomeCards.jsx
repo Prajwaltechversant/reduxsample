@@ -1,23 +1,30 @@
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { saveItem } from '../redux/slices/saveItemSlice'
 
-export default function HomeCards({i}) {
-    console.log("item", i.image)
-    return ( 
+export default function HomeCards({ i, style }) {
+    // console.log(i.image)
+
+    const dispatch = useDispatch()
+
+    return (
         <View styles={styles.container}>
-            <ImageBackground style={styles.card} source={{uri:`${i.image}`}} >
+            <ImageBackground style={styles.card} src={i.image} >
                 <View  >
                     <View>
-                        <Text style={styles.text}> lorem </Text>
+                        <Text style={styles.text}> {i.title}</Text>
                     </View>
                     {/* <View>
                     <Image style={styles.image} src='' />
                 </View> */}
-                    <View>
-                        <TouchableOpacity style={styles.button}>
-                            <Text>Save</Text>
-                        </TouchableOpacity>
-                    </View>
+                    {!style &&
+                        <View>
+                            <TouchableOpacity style={styles.button} onPress={() => dispatch(saveItem(i))}>
+                                <Text style={{ color: 'black' }}>Save</Text>
+                            </TouchableOpacity>
+                        </View>
+                    }
                 </View>
             </ImageBackground>
         </View>
@@ -27,15 +34,18 @@ export default function HomeCards({i}) {
 
 const styles = StyleSheet.create({
     container: {
-        borderRadius: 30
+        borderRadius: 30,
+        paddingTop: 10,
 
     },
     card: {
         justifyContent: 'flex-end',
-        alignItems: 'center',
-        width: 180,
-        height: 150,
+        // alignItems: 'center',
+
+        width: 200,
+        height: 280,
         padding: 5,
+
     },
     image: {
         width: 152,
@@ -50,8 +60,9 @@ const styles = StyleSheet.create({
         marginTop: 10
         , backgroundColor: "#CEF509",
         padding: 2,
-        borderRadius:30,
-        justifyContent:'center',
-        alignItems:'center'
+        height: 30,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })

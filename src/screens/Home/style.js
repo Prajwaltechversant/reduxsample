@@ -4,16 +4,21 @@ import { StyleSheet } from "react-native";
 
 
 export const styles = StyleSheet.create({
-    container:{
-        
+    container: {
+        backgroundColor:'yellow'
     },
-    headingTextView:{
-        justifyContent:'center',
-        alignItems:'center',
-        marginTop:10    
+    // content: {
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+
+    // },
+    headingTextView: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 10
     },
-    body:{
-        padding:10
+    body: {
+        padding: 10
     }
 })
 
